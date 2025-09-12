@@ -1,1 +1,2 @@
 npx ng generate component components/header
+npx ng generate component components/navbar

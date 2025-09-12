@@ -18,209 +18,26 @@
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap"
         rel="stylesheet">
 
-    <style>
-        /* 自訂 CSS 風格 */
-        :root {
-            --primary-color: #0d6efd;
-            /* 亮藍色 */
-            --secondary-color: #ffc107;
-            /* 金色點綴 */
-            --dark-bg: #1a1a2e;
-            /* 深藍背景 */
-            --light-bg: #f8f9fa;
-            --text-light: #e0e0e0;
-            --card-bg: #23233b;
-        }
-
-        body {
-            font-family: 'Noto Sans TC', 'Poppins', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-        }
-
-        /* --- 導覽列 --- */
-        .navbar {
-            background-color: rgba(26, 26, 46, 0.9) !important;
-            backdrop-filter: blur(10px);
-            transition: background-color 0.3s ease;
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .nav-link {
-            font-weight: 500;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--secondary-color) !important;
-        }
-
-        /* --- Hero 區塊 --- */
-        .hero {
-            position: relative;
-            height: 100vh;
-            /* background-image: linear-gradient(rgba(26, 26, 46, 0.8), rgba(26, 26, 46, 0.8)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop'); */
-            background-image: linear-gradient(rgba(1, 53, 18, 0.8), rgba(26, 26, 46, 0.8)),url('C:\workspace\SynapseXWeb\SynapseXWeb\01-starting-project\src\assets\Gemini_Generated_Image_7tfmsa7tfmsa7tfm.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 1rem auto;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0b5ed7;
-            border-color: #0a58ca;
-            transform: translateY(-2px);
-        }
-
-        /* --- 內容區塊通用樣式 --- */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-weight: 700;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--primary-color);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        /* --- 服務卡片 --- */
-        .service-card {
-            background-color: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card .icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        /* --- 團隊成員 --- */
-        .team-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .team-card:hover {
-            transform: scale(1.05);
-        }
-
-        .team-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .team-card .team-info {
-            padding: 20px;
-        }
-
-        .team-card .team-info h5 {
-            color: var(--secondary-color);
-        }
-
-        /* --- 聯絡我們 --- */
-        #contact {
-            background-color: var(--card-bg);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: #111122;
-            padding: 40px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
-    <!-- 導覽列 -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-graph-up-arrow"></i> SynapseX</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#hero">首頁</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">核心服務</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">專業團隊</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">聯絡我們</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <app-navbar></app-navbar>
 
     <!-- Hero 區塊 -->
     <header id="hero" class="hero">
         <div class="container text-white">
-            <h1>數據驅動決策，精準掌握市場脈動</h1>
-            <p class="lead">我們是結合金融專業與頂尖技術的量化交易團隊，致力於為客戶創造卓越的長期價值。</p>
-            <a href="#services" class="btn btn-primary btn-lg">了解更多</a>
+            <h1>數據驅動決策&nbsp;&nbsp;精準掌握市場脈動</h1>
+            <p class="lead">我們是結合金融專業與頂尖技術的量化交易團隊<br>致力於為客戶創造卓越的長期價值。</p>
+            
+
+            <div class="mt-3">
+                <a href="#services" class="btn btn-primary btn-lg">了解更多</a>
+            </div>
+
         </div>
     </header>
-
+    
     <main>
         <!-- 核心服務區塊 -->
         <section id="services" class="section">
