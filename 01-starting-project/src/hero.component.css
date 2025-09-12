@@ -1,0 +1,12 @@
+.hero {
+    position: relative;
+    height: 100vh;
+    /* 圖片路徑相對於 angular.json 中定義的 assets 資料夾 */
+    background-image: linear-gradient(rgba(1, 53, 18, 0.8), rgba(26, 26, 46, 0.8)), url('assets/Gemini_Generated_Image_7tfmsa7tfmsa7tfm.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
