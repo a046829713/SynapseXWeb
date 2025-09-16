@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { BacktestComponent } from './components/backtest/backtest.component';
 
+
 export const routes: Routes = [
     { path: '', component: HomeComponent }, // 預設路徑顯示 HomeComponent
     { path: 'home', component: HomeComponent }, // /home 路徑也顯示 HomeComponent

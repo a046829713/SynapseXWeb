@@ -1,4 +1,8 @@
-.TEST{
-    height: 30vh;
-    background-color: aqua;
+:host {
+    display: block;
+    /* 讓元件本身可以設定寬高 */
+    width: 80%;
+    margin: auto;
+    height: 500px;
+    /* 給一個預設高度，或根據你的佈局調整 */
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>頂尖交易團隊 - 首頁</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+        <div class="tradingview-widget-copyright"><a
+                href="https://www.tradingview.com/symbols/NASDAQ-AAPL/?exchange=NASDAQ" rel="noopener nofollow"
+                target="_blank"><span class="blue-text">AAPL chart by TradingView</span></a></div>
+        <script type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "allow_symbol_change": true,
+                        "calendar": false,
+                            "details": false,
+                                "hide_side_toolbar": true,
+                                    "hide_top_toolbar": false,
+                                        "hide_legend": false,
+                                            "hide_volume": false,
+                                                "hotlist": false,
+                                                    "interval": "D",
+                                                        "locale": "en",
+                                                            "save_image": true,
+                                                                "style": "1",
+                                                                    "symbol": "NASDAQ:AAPL",
+                                                                        "theme": "light",
+                                                                            "timezone": "Etc/UTC",
+                                                                                "backgroundColor": "#ffffff",
+                                                                                    "gridColor": "rgba(41, 98, 255, 0.06)",
+                                                                                        "watchlist": [],
+                                                                                            "withdateranges": false,
+                                                                                                "compareSymbols": [],
+                                                                                                    "studies": [],
+                                                                                                        "autosize": true
+                }
+            </script>
+    </div>
+    <!-- TradingView Widget END -->
+</body>
+
+</html>
