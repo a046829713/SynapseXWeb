@@ -1,7 +1,7 @@
 <!-- 導覽列 -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#"><i class="bi bi-graph-up-arrow"></i> SynapseX</a>
+        <a class="navbar-brand" routerLink="/home"><i class="bi bi-graph-up-arrow"></i> SynapseX</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,16 +9,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#hero">首頁</a>
+                    <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">首頁</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="assets/backtest.html" target="_blank" rel="noopener noreferrer">策略回測</a>
+                    <a class="nav-link" routerLink="/backtest" routerLinkActive="active">策略回測</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#team">專業團隊</a>
+                    <a class="nav-link" routerLink="/home" fragment="team">專業團隊</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">聯絡我們</a>
+                    <a class="nav-link" routerLink="/home" fragment="contact">聯絡我們</a>
                 </li>
                     <li class="nav-item">
                     <a class="nav-link" href="#login">登入</a>
