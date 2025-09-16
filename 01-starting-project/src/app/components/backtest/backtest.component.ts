@@ -17,7 +17,7 @@ export class BacktestComponent implements AfterViewInit {
   @ViewChild('tradingviewContainer') tradingviewContainer!: ElementRef;
   
   // 可以透過 @Input 讓父元件傳入 symbol，增加可重用性
-  @Input() symbol: string = 'NASDAQ:AAPL'; 
+  @Input() symbol: string = 'Binance:BTCUSDT'; 
 
   // 注入 Renderer2 來安全地操作 DOM
   constructor(private renderer: Renderer2) { }
