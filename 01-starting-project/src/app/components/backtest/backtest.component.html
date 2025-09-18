@@ -1,1 +1,10 @@
-<p>backtest works!</p>
+<div class="container backtest-page">
+    <h2 class="section-title">AI 交易模型庫</h2>
+    <p class="text-center lead mb-5">探索我們團隊開發的頂尖量化交易模型，了解其歷史表現與策略核心。</p>
+
+    <div class="row g-4">
+        <div class="col-lg-4 col-md-6" *ngFor="let model of tradingModels">
+            <app-model-card [model]="model"></app-model-card>
+        </div>
+    </div>
+</div>

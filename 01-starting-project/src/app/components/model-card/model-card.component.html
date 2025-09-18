@@ -1,6 +1,26 @@
-<p class="mt-5">model-card works!</p>
-<div class="service-card">
-    <div class="icon"><i class="bi bi-robot"></i></div>
-    <h4>演算法交易</h4>
-    <p>利用先進的數學模型和高速計算，執行自動化交易策略，捕捉微秒級的市場機會。</p>
+<div class="model-card" *ngIf="model">
+    <div class="model-card-header">
+        <!-- <img [src]="model.imageUrl" [alt]="model.name" class="model-image"> -->
+        <div class="model-top-area">
+            
+        </div>
+        <div class="model-card-header-overlay">
+            <h4 class="model-name">{{ model.name }}</h4>
+        </div>
+    </div>
+    <div class="model-card-body">
+        <p class="model-description">{{ model.description }}</p>
+        <hr>
+        <h6 class="kpi-title">關鍵績效指標 (KPIs)</h6>
+        <ul class="kpi-list">
+            <li *ngFor="let kpi of model.kpis">
+                <i [class]="'bi ' + kpi.icon"></i>
+                <strong>{{ kpi.label }}:</strong>
+                <span>{{ kpi.value }}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="model-card-footer">
+        <a href="#" class="btn btn-outline-primary w-100">查看詳細回測</a>
+    </div>
 </div>

@@ -1,0 +1,111 @@
+/* c:\workspace\SynapseXWeb\SynapseXWeb\01-starting-project\src\app\components\model-card\model-card.component.css */
+.model-card {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #3a3a5c;
+}
+
+.model-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.model-card-header {
+    position: relative;
+    height: 180px;
+}
+
+.model-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.model-top-area {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, rgba(155, 155, 249, 0.9) 0%, rgba(26, 26, 81, 0) 100%);
+}
+
+.model-card-header-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(26, 26, 46, 0.9) 0%, rgba(26, 26, 46, 0) 100%);
+}
+
+.model-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.model-card-body {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.model-description {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    opacity: 0.9;
+    min-height: 60px;
+}
+
+.kpi-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.kpi-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.kpi-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.kpi-list .bi {
+    color: var(--primary-color);
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.kpi-list strong {
+    color: #ccc;
+    min-width: 100px;
+}
+
+.model-card-footer {
+    padding: 20px;
+    padding-top: 0;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}

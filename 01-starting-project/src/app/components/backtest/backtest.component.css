@@ -1,0 +1,5 @@
+/* c:\workspace\SynapseXWeb\SynapseXWeb\01-starting-project\src\app\components\backtest\backtest.component.css */
+.backtest-page {
+    padding-top: 120px; /* 確保內容不會被固定的 navbar 擋住 */
+    padding-bottom: 80px;
+}
