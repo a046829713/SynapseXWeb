@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BacktestComponent } from './backtest.component';
+import { EquityChartComponent } from './equity-chart.component';
 
-describe('BacktestComponent', () => {
-  let component: BacktestComponent;
-  let fixture: ComponentFixture<BacktestComponent>;
+describe('EquityChartComponent', () => {
+  let component: EquityChartComponent;
+  let fixture: ComponentFixture<EquityChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BacktestComponent]
+      imports: [EquityChartComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BacktestComponent);
+    fixture = TestBed.createComponent(EquityChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

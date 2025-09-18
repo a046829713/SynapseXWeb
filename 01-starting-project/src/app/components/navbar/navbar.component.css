@@ -18,3 +18,9 @@
 .nav-link.active {
     color: var(--secondary-color) !important;
 }
+
+
+.dropdown-menu-dark .dropdown-item:active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+}

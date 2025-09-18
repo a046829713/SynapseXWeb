@@ -10,7 +10,7 @@ describe('BacktestComponent', () => {
     await TestBed.configureTestingModule({
       imports: [BacktestComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(BacktestComponent);
     component = fixture.componentInstance;

@@ -81,27 +81,6 @@ body {
     border-radius: 2px;
 }
 
-/* --- 服務卡片 --- */
-.service-card {
-    background-color: var(--card-bg);
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 30px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.service-card .icon {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
 
 /* --- 團隊成員 --- */
 .team-card {

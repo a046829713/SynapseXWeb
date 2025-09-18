@@ -1,0 +1,8 @@
+:host {
+    display: block;
+    /* 讓元件本身可以設定寬高 */
+    width: 70%;
+    margin: auto;
+    height: 600px;
+    /* 給一個預設高度，或根據你的佈局調整 */
+}

@@ -1,62 +1,146 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>頂尖交易團隊 - 首頁</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
+    <title>D3.js 權益曲線圖</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 2px;
+        }
+        .axis-label {
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            height: auto;
+            padding: 8px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- TradingView Widget BEGIN -->
-    <div class="tradingview-widget-container" style="height:100%;width:100%">
-        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-        <div class="tradingview-widget-copyright"><a
-                href="https://www.tradingview.com/symbols/NASDAQ-AAPL/?exchange=NASDAQ" rel="noopener nofollow"
-                target="_blank"><span class="blue-text">AAPL chart by TradingView</span></a></div>
-        <script type="text/javascript"
-            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-                {
-                    "allow_symbol_change": true,
-                        "calendar": false,
-                            "details": false,
-                                "hide_side_toolbar": true,
-                                    "hide_top_toolbar": false,
-                                        "hide_legend": false,
-                                            "hide_volume": false,
-                                                "hotlist": false,
-                                                    "interval": "D",
-                                                        "locale": "en",
-                                                            "save_image": true,
-                                                                "style": "1",
-                                                                    "symbol": "NASDAQ:AAPL",
-                                                                        "theme": "light",
-                                                                            "timezone": "Etc/UTC",
-                                                                                "backgroundColor": "#ffffff",
-                                                                                    "gridColor": "rgba(41, 98, 255, 0.06)",
-                                                                                        "watchlist": [],
-                                                                                            "withdateranges": false,
-                                                                                                "compareSymbols": [],
-                                                                                                    "studies": [],
-                                                                                                        "autosize": true
-                }
-            </script>
-    </div>
-    <!-- TradingView Widget END -->
-</body>
+    <h2>權益曲線圖 (Equity Curve)</h2>
+    <div id="chart"></div>
 
+    <script>
+        // 1. 您的資料
+        const jsonData = {
+            "status": "success",
+            
+        };
+        const data = jsonData.data;
+
+        // 2. 設定圖表尺寸和邊距
+        const margin = {top: 20, right: 30, bottom: 60, left: 60};
+        const width = 960 - margin.left - margin.right;
+        const height = 500 - margin.top - margin.bottom;
+
+        // 3. 創建 SVG 元素
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        
+        // 創建 Tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip");
+
+        // 4. 解析日期格式並轉換資料
+        const parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+        data.forEach(d => {
+            d.datetimelist = parseTime(d.datetimelist);
+            d.CloseProfit = +d.CloseProfit;
+        });
+
+        // 5. 設定 X 軸和 Y 軸的比例尺
+        // X 軸 (時間)
+        const x = d3.scaleTime()
+            .domain(d3.extent(data, d => d.datetimelist))
+            .range([0, width]);
+
+        // Y 軸 (收益)
+        const y = d3.scaleLinear()
+            .domain([d3.min(data, d => d.CloseProfit) * 0.98, d3.max(data, d => d.CloseProfit) * 1.02]) // 留一點上下空間
+            .range([height, 0]);
+
+        // 6. 創建 X 軸和 Y 軸
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x).ticks(d3.timeHour.every(3)).tickFormat(d3.timeFormat("%m/%d %H:%M")))
+            .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-45)");
+
+        svg.append("g")
+            .call(d3.axisLeft(y));
+            
+        // 7. 繪製線條
+        const line = d3.line()
+            .x(d => x(d.datetimelist))
+            .y(d => y(d.CloseProfit));
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", line);
+            
+        // 8. 新增資料點 (用於互動)
+        svg.selectAll("dot")
+            .data(data)
+            .enter().append("circle")
+            .attr("r", 4)
+            .attr("cx", d => x(d.datetimelist))
+            .attr("cy", d => y(d.CloseProfit))
+            .style("fill", "steelblue")
+            .style("opacity", 0) // 平時隱藏
+            .on("mouseover", function(event, d) {
+                d3.select(this).style("opacity", 1); // 顯示圓點
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`時間: ${d3.timeFormat("%Y-%m-%d %H:%M")(d.datetimelist)}<br/>收益: ${d.CloseProfit.toFixed(2)}`)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                d3.select(this).style("opacity", 0); // 隱藏圓點
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+
+        // 9. 添加軸標籤
+        // X 軸標籤
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom - 5)
+            .text("時間");
+
+        // Y 軸標籤
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left + 20)
+            .text("累積收益");
+
+    </script>
+</body>
 </html>

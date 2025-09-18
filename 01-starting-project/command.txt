@@ -1,4 +1,4 @@
 npx ng generate component components/header
 npx ng generate component components/navbar
 npx ng generate component components/home
-npx ng generate component components/tradingview
+npx ng generate component components/equity-chart
