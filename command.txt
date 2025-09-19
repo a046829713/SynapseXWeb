@@ -2,3 +2,4 @@ npx ng generate component components/header
 npx ng generate component components/navbar
 npx ng generate component components/home
 npx ng generate component components/equity-chart
+npx ng build
