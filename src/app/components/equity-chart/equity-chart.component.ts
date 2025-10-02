@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
 import { timeFormat } from 'd3-time-format';
 // 為了 TypeScript 的型別安全，定義一個資料點的介面
@@ -9,7 +10,9 @@ interface DataPoint {
 
 @Component({
 	selector: 'app-equity-chart',
-	templateUrl: './equity-chart.component.html',
+	standalone: true,
+	imports: [FormsModule], // 匯入 FormsModule
+	templateUrl: './equity-chart.component.html', // 我們將在下面修改這個檔案
 	styleUrls: ['./equity-chart.component.css']
 })
 export class EquityChartComponent implements OnInit, AfterViewInit {
@@ -20,25 +23,42 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 	// 使用 @ViewChild 取得 HTML 模板中的 #chart 元素
 	@ViewChild('chart') private chartContainer!: ElementRef;
 
+	// 用於綁定 textarea 的 JSON 字串資料
+	public jsonData: string = JSON.stringify([
+		{ "datetimelist": "2025-09-28 09:30:00", "CloseProfit": 150.75 },
+		{ "datetimelist": "2025-09-28 10:00:00", "CloseProfit": 152.30 },
+		{ "datetimelist": "2025-09-28 10:30:00", "CloseProfit": 151.90 },
+		{ "datetimelist": "2025-09-28 11:00:00", "CloseProfit": 153.50 },
+		{ "datetimelist": "2025-09-28 11:30:00", "CloseProfit": 155.10 },
+		{ "datetimelist": "2025-09-28 12:00:00", "CloseProfit": 154.80 },
+		{ "datetimelist": "2025-09-28 12:30:00", "CloseProfit": 156.20 },
+		{ "datetimelist": "2025-09-28 13:00:00", "CloseProfit": 155.95 }
+	], null, 2);
+
 	constructor() { }
 
 	ngOnInit(): void {
-		this.data = [
-			{ datetimelist: '2025-09-28 09:30:00', CloseProfit: 150.75 },
-			{ datetimelist: '2025-09-28 10:00:00', CloseProfit: 152.30 },
-			{ datetimelist: '2025-09-28 10:30:00', CloseProfit: 151.90 },
-			{ datetimelist: '2025-09-28 11:00:00', CloseProfit: 153.50 },
-			{ datetimelist: '2025-09-28 11:30:00', CloseProfit: 155.10 },
-			{ datetimelist: '2025-09-28 12:00:00', CloseProfit: 154.80 },
-			{ datetimelist: '2025-09-28 12:30:00', CloseProfit: 156.20 },
-			{ datetimelist: '2025-09-28 13:00:00', CloseProfit: 155.95 },
-		];
+		// 初始時不清空 data，而是使用 jsonData 的預設值來繪製圖表
+		
 	}
 
 	ngAfterViewInit(): void {
-		// 確保 data 存在才繪製圖表
-		if (this.data && this.data.length > 0) {
-			this.createChart();
+		// ngOnInit 中已經呼叫 onSubmit，所以這裡不需要再繪製
+		this.onSubmit();
+	}
+
+	// 處理表單提交
+	onSubmit(): void {
+		try {
+			console.log(this.jsonData)
+			this.data = JSON.parse(this.jsonData);
+			
+			if (this.data && this.data.length > 0) {
+				this.createChart();
+			}
+		} catch (error) {
+			console.error('無效的 JSON 格式:', error);
+			alert('錯誤：請檢查您輸入的 JSON 格式是否正確。');
 		}
 	}
 
@@ -149,45 +169,33 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 			.attr('stroke-width', 1.5)
 			.attr('d', line);
 
-		// 10. Tooltip 相關元素
+		// 10. 建立 Tooltip
 		const tooltip = d3.select(element).append('div').attr('class', 'tooltip').style('opacity', 0);
-		const focus = svg.append('g').attr('class', 'focus').style('display', 'none');
-		focus.append('circle').attr('r', 5).attr("fill", "rad");
-		focus.append('line').attr('class', 'x-hover-line hover-line').attr('y1', 0).attr('y2', height);
 
-		// 11. 建立一個透明的矩形來捕捉滑鼠事件
-		svg.append('rect')
-			.attr('class', 'overlay')
-			.attr('width', width)
-			.attr('height', height)
+		// 11. 為每個資料點加上圓圈，並綁定事件
+		svg.selectAll('.dot')
+			.data(processedData)
+			.enter().append('circle')
+			.attr('class', 'dot')
+			.attr('cx', d => x(d.datetimelist))
+			.attr('cy', d => y(d.CloseProfit))
+			.attr('r', 5) // 圓圈半徑
+			.attr('fill', 'green') // 圓圈顏色
+			.style('cursor', 'pointer') // 讓滑鼠變成指標
 			.on('mouseover', () => {
-				focus.style('display', null);
 				tooltip.style('opacity', 1);
 			})
 			.on('mouseout', () => {
-				focus.style('display', 'none');
 				tooltip.style('opacity', 0);
 			})
-			.on('mousemove', (event) => {
-				const bisectDate = d3.bisector((d: { datetimelist: Date }) => d.datetimelist).left;
-				const x0 = x.invert(d3.pointer(event, this)[0]);
-				const i = bisectDate(processedData, x0, 1);
-				const d0 = processedData[i - 1];
-				const d1 = processedData[i];
-				if (!d0 || !d1) return;
-
-				const d = (x0.getTime() - d0.datetimelist.getTime()) > (d1.datetimelist.getTime() - x0.getTime()) ? d1 : d0;
-
-				focus.attr('transform', `translate(${x(d.datetimelist)}, ${y(d.CloseProfit)})`);
-				focus.select('.x-hover-line').attr('y2', height - y(d.CloseProfit));
-
+			.on('mousemove', (event, d) => {
 				const tooltipFormat = timeFormat('%Y-%m-%d %H:%M');
 				tooltip.html(`
 					<div>日期: ${tooltipFormat(d.datetimelist)}</div>
 					<div>權益: ${d.CloseProfit.toFixed(2)}</div>
 				`)
-					.style('left', `${event.pageX + 15}px`)
-					.style('top', `${event.pageY - 28}px`);
+				.style('left', `${event.pageX + 15}px`)
+				.style('top', `${event.pageY - 28}px`);
 			});
 	}
 }
