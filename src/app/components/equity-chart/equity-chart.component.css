@@ -1,0 +1,50 @@
+/* 讓容器有一個基本的寬度，圖表才能顯示出來 */
+.chart-container {
+    width: 80%;
+    margin: auto;
+    /* 可以加上最小高度，避免資料載入前容器塌陷 */
+    min-height: 400px;
+    margin-top: 4%;
+    /* 為了 Tooltip 定位 */
+    position: relative; 
+}
+
+/* D3 Tooltip 樣式 */
+/* 使用 ::ng-deep 來穿透 Angular 的視圖封裝，以便樣式化 D3 動態產生的元素 */
+::ng-deep .tooltip {
+    color: darkseagreen;
+    position: absolute;
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 8px;
+    font: 12px sans-serif ;
+    background: rgb(16, 55, 40);
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none; /* 讓滑鼠事件可以穿透 Tooltip */
+    transition: opacity 0.2s;
+}
+
+/* D3 座標軸和格線樣式 */
+::ng-deep .axis path,
+::ng-deep .axis line {
+    fill: none;
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+}
+
+::ng-deep .grid path {
+    stroke: none;
+}
+
+::ng-deep .grid .tick line {
+    stroke: #e0e0e0;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+
+::ng-deep .overlay {
+    fill: none;
+    pointer-events: all;
+}

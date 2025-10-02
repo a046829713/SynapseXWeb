@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModelCardComponent, TradingModel } from '../model-card/model-card.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-backtest',
   standalone: true,
-  imports: [CommonModule, ModelCardComponent],
+  imports: [CommonModule, ModelCardComponent,RouterLink, RouterLinkActive],
   templateUrl: './backtest.component.html',
   styleUrl: './backtest.component.css'
 })

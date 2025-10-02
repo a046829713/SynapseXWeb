@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 export interface TradingModel {
   id: number;
@@ -16,7 +17,7 @@ export interface TradingModel {
 @Component({
   selector: 'app-model-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink, RouterLinkActive],
   templateUrl: './model-card.component.html',
   styleUrl: './model-card.component.css'
 })
