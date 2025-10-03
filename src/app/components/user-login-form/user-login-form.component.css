@@ -7,12 +7,13 @@
 }
 
 .row {
-    width: 100%;
+    width: 60%;
     max-width: 1200px;
     background-color: #fff;
     border-radius: 1rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    margin-top: 7%;
     
 }
 
