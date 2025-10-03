@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '
 import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
 import { timeFormat } from 'd3-time-format';
+
+
 // 為了 TypeScript 的型別安全，定義一個資料點的介面
 interface DataPoint {
 	datetimelist: string;
