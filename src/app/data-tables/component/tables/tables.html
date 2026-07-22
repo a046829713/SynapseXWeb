@@ -1,0 +1,42 @@
+<div class="tables">
+  <table>
+    <thead>
+      <tr>
+        @for (meta of metadata(); track meta.data) {
+          <th 
+            [style.width]="meta.width" 
+            [style.min-width]="meta.width" 
+            #th
+            draggable="true"
+            (dragstart)="onDragStart($event, $index)"
+            (dragover)="onDragOver($event, $index)"
+            (dragleave)="onDragLeave($event, $index)"
+            (drop)="onDrop($event, $index)"
+            (dragend)="onDragEnd($event)"
+            [class.drag-over]="dragOverIndex === $index"
+            (click)="handleHeaderClick(meta.data, $event)"
+          >
+            <div class="header-content">
+              <span>{{ meta.column }}</span>
+              @if (sortKey() === meta.data) {
+                <span class="sort-icon">
+                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+                </span>
+              }
+            </div>
+            <div class="resizer" appResizable [resizableTh]="th" (widthChange)="meta.width = $event"></div>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of list(); track $index) {
+        <tr>
+          @for (meta of metadata(); track meta.data) {
+            <td>{{ row[meta.data] }}</td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

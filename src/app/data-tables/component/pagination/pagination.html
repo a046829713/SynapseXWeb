@@ -1,0 +1,15 @@
+@if (!disabled()) {
+  <div class="pagi">
+    <div class="flex1"></div>
+    @for (page of pages(); track $index) {
+      <div
+        class="pagi-item"
+        [class.current]="page + 1 == currentPage()"
+        (click)="changePage(page + 1)"
+      >
+        {{ page + 1 }}
+      </div>
+    }
+    <span class="info">Total : {{ list().length }}</span>
+  </div>
+}

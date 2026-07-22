@@ -1,0 +1,18 @@
+<nav class="pagination" aria-label="分頁導覽">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage() === 1">
+        上一頁
+    </button>
+
+    @for (page of pages(); track page) {
+    @if (
+    pageRange().includes(page)
+    ) { <button type="button" (click)="goToPage(page)" [class.active]="currentPage() === page"
+        [attr.aria-current]="currentPage() === page ? 'page' : null">
+        {{ page }}
+    </button>}
+    }
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+        下一頁
+    </button>
+</nav>

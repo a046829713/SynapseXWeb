@@ -1,0 +1,29 @@
+<div class="data-tables">
+  <app-tables
+    [metadata]="metadata()"
+    [list]="renderList()"
+    [sortKey]="sortKey()"
+    [sortDirection]="sortDirection()"
+    (onSort)="handleSort($event)"
+  />
+  <div class="footer">
+    @if (!paginationDisabled()) {
+      <div class="page-size-selector">
+        <label for="pageSize">顯示筆數:</label>
+        <select id="pageSize" (change)="changePageSize($event)">
+          <option [value]="10" [selected]="rowsOfPage() === 10">10</option>
+          <option [value]="20" [selected]="rowsOfPage() === 20">20</option>
+          <option [value]="30" [selected]="rowsOfPage() === 30">30</option>
+        </select>
+      </div>
+    }
+    <app-pagination
+      class="pagination-component"
+      [list]="sortedList()"
+      [currentPage]="currentPage()"
+      [limit]="rowsOfPage()"
+      (onChangePage)="changePage($event)"
+      [disabled]="paginationDisabled()"
+    />
+  </div>
+</div>

@@ -2,6 +2,9 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '
 import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
 import { timeFormat } from 'd3-time-format';
+import { EquityChartService } from './equity-chart.service';
+import { StrategyComponent } from '../../backtest/strategy/strategy.component';
+import { RouterLink } from '@angular/router';
 
 
 // 為了 TypeScript 的型別安全，定義一個資料點的介面
@@ -13,11 +16,19 @@ interface DataPoint {
 @Component({
 	selector: 'app-equity-chart',
 	standalone: true,
-	imports: [FormsModule], // 匯入 FormsModule
+	imports: [FormsModule, StrategyComponent, RouterLink], // 匯入 FormsModule
 	templateUrl: './equity-chart.component.html', // 我們將在下面修改這個檔案
-	styleUrls: ['./equity-chart.component.css']
+	styleUrls: ['./equity-chart.component.css'],
+	providers: [EquityChartService]
 })
 export class EquityChartComponent implements OnInit, AfterViewInit {
+
+	constructor(private equityChartService: EquityChartService) {
+
+	}
+
+	showDate = '';
+	showValue = '';
 
 	// 使用 @Input 裝飾器，讓父元件可以傳入 data
 	@Input() data: DataPoint[] = [];
@@ -25,42 +36,19 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 	// 使用 @ViewChild 取得 HTML 模板中的 #chart 元素
 	@ViewChild('chart') private chartContainer!: ElementRef;
 
-	// 用於綁定 textarea 的 JSON 字串資料
-	public jsonData: string = JSON.stringify([
-		{ "datetimelist": "2025-09-28 09:30:00", "CloseProfit": 150.75 },
-		{ "datetimelist": "2025-09-28 10:00:00", "CloseProfit": 152.30 },
-		{ "datetimelist": "2025-09-28 10:30:00", "CloseProfit": 151.90 },
-		{ "datetimelist": "2025-09-28 11:00:00", "CloseProfit": 153.50 },
-		{ "datetimelist": "2025-09-28 11:30:00", "CloseProfit": 155.10 },
-		{ "datetimelist": "2025-09-28 12:00:00", "CloseProfit": 154.80 },
-		{ "datetimelist": "2025-09-28 12:30:00", "CloseProfit": 156.20 },
-		{ "datetimelist": "2025-09-28 13:00:00", "CloseProfit": 155.95 }
-	], null, 2);
+	public jsonData: string = JSON.stringify(this.equityChartService.dummieData, null, 2);
 
-	constructor() { }
 
 	ngOnInit(): void {
 		// 初始時不清空 data，而是使用 jsonData 的預設值來繪製圖表
-		
+		console.log(123)
 	}
 
 	ngAfterViewInit(): void {
-		// ngOnInit 中已經呼叫 onSubmit，所以這裡不需要再繪製
-		this.onSubmit();
-	}
+		this.data = JSON.parse(this.jsonData);
 
-	// 處理表單提交
-	onSubmit(): void {
-		try {
-			console.log(this.jsonData)
-			this.data = JSON.parse(this.jsonData);
-			
-			if (this.data && this.data.length > 0) {
-				this.createChart();
-			}
-		} catch (error) {
-			console.error('無效的 JSON 格式:', error);
-			alert('錯誤：請檢查您輸入的 JSON 格式是否正確。');
+		if (this.data && this.data.length > 0) {
+			this.createChart();
 		}
 	}
 
@@ -184,20 +172,17 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 			.attr('r', 5) // 圓圈半徑
 			.attr('fill', 'green') // 圓圈顏色
 			.style('cursor', 'pointer') // 讓滑鼠變成指標
-			.on('mouseover', () => {
-				tooltip.style('opacity', 1);
-			})
-			.on('mouseout', () => {
-				tooltip.style('opacity', 0);
-			})
 			.on('mousemove', (event, d) => {
 				const tooltipFormat = timeFormat('%Y-%m-%d %H:%M');
 				tooltip.html(`
 					<div>日期: ${tooltipFormat(d.datetimelist)}</div>
 					<div>權益: ${d.CloseProfit.toFixed(2)}</div>
 				`)
-				.style('left', `${event.pageX + 15}px`)
-				.style('top', `${event.pageY - 28}px`);
+					.style('left', `${event.pageX + 15}px`)
+					.style('top', `${event.pageY - 28}px`);
+
+				this.showDate = tooltipFormat(d.datetimelist);
+				this.showValue = d.CloseProfit.toFixed(2);
 			});
 	}
 }

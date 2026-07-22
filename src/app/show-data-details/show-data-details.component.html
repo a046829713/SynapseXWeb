@@ -1,0 +1,10 @@
+<div class="mx-auto w-75" style="margin-top: 100px;">
+    <app-data-grid [data]="stockData" [columns]="columns" [pageSize]="20"></app-data-grid>
+</div>
+
+
+<ng-template #statusTemplate let-row="row" let-value="value">
+    <button>
+        {{ value }}
+    </button>
+</ng-template>

@@ -1,0 +1,59 @@
+<table class="data-grid">
+    <thead class="data-grid__header">
+        <tr>
+            @for (
+            column of TableColumns();
+            track column.field
+            ) {
+            <th class="data-grid__header-cell" [style.width]="getColumnWidth(column)"
+                [style.min-width.px]="column.minWidth ?? null" scope="col"
+                (click)="handleHeaderClick(column.field, $event)"
+                (dragstart)="onDragStart($event, $index)"
+                (dragover)="onDragOver($event, $index)"
+                (drop)="onDrop($event, $index)"
+                draggable="true">
+                {{ column.header }}
+
+                @if(column.field === sortKey()){
+                <span class="sort-icon">
+                    {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+                </span>
+                }
+
+            </th>
+            }
+        </tr>
+    </thead>
+
+    <tbody class="data-grid__body">
+        @for (
+        row of TableData();
+        track row
+        ) {
+        <tr class="data-grid__row">
+            @for (
+            column of TableColumns();
+            track column.field
+            ) {
+            <td class="data-grid__cell">
+                @if (column.cellTemplate) {
+                <ng-container [ngTemplateOutlet]="column.cellTemplate" [ngTemplateOutletContext]="{
+                                    $implicit: row,
+                                    row: row,
+                                    value: getCellValue(row, column)
+                                }" />
+                } @else {
+                {{ getCellValue(row, column) }}
+                }
+            </td>
+            }
+        </tr>
+        } @empty {
+        <tr>
+            <td class="data-grid__empty" [attr.colspan]="TableColumns().length">
+                沒有資料
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -3,6 +3,7 @@
     background-color: rgba(26, 26, 46, 0.9) !important;
     backdrop-filter: blur(10px);
     transition: background-color 0.3s ease;
+    height:var(--navbar-height);
 }
 
 .navbar-brand {

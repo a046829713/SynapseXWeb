@@ -17,7 +17,7 @@ export interface TradingModel {
 @Component({
   selector: 'app-model-card',
   standalone: true,
-  imports: [CommonModule,RouterLink, RouterLinkActive],
+  imports: [CommonModule,RouterLink],
   templateUrl: './model-card.component.html',
   styleUrl: './model-card.component.css'
 })

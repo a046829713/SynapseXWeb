@@ -1,0 +1,7 @@
+<div class="data-grid-container">
+    <app-tables [TableData]="viewData()" [TableColumns]="viewColumns()">
+    </app-tables>
+    <div class="d-flex justify-content-center mt-3">
+        <app-pagination [paginationData]="viewData()" [pageSize]="pageSize()"></app-pagination>
+    </div>
+</div>
