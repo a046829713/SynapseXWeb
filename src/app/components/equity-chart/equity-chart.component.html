@@ -2,15 +2,34 @@
     <div #chart class="chart-container"></div>
     <div class="d-flex flex-column w-50 gap-3">
         <div class="sideContent">
-            <p>日期 : {{ showDate }}</p>
-            <p>今日資料 : {{ showValue }} </p>
+            <p>日期 : {{ showDate() }}</p>
+            <p>今日資料 : {{ showValue() }} </p>
         </div>
         <div>
-            <app-strategy></app-strategy>
+            <app-strategy (showDetail)="FullScreenOpen($event)"></app-strategy>
+
         </div>
-        <button class="btn-primary">
-            <a [routerLink]="['/ShowDataDetails']">Row Data</a>
-        </button>
+        <div class="d-flex justify-content-center mt-3">             
+            <button class="btn btn-primary">
+                <a class="text-white text-decoration-none" [routerLink]="['/ShowDataDetails']">Row Data</a>
+            </button>
+        </div>
+
+
+
+
     </div>
+
+    @if (isFullScreenOpen()) {
+        <div class="fullscreen-mask">
+            <div class="content">
+                <app-stratey-big></app-stratey-big>
+                <div class="d-flex justify-content-center mt-3">
+                    <button class="btn btn-danger" (click)="isFullScreenOpen.set(false)">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    }
 
 </div>

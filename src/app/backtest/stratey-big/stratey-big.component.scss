@@ -7,23 +7,11 @@
 }
 
 
-.strategy-page {
-    color: var(--text);
-    background:
-        radial-gradient(circle at 12% 7%, rgba(124, 92, 255, .22), transparent 34%),
-        radial-gradient(circle at 91% 18%, rgba(38, 217, 208, .12), transparent 30%),
-        linear-gradient(145deg, #080c16 0%, #101827 52%, #080d17 100%);
-    font-family: Inter, "Noto Sans TC", system-ui, -apple-system, sans-serif;
-}
-
-
-.strategy-shell {
-    max-width: 1120px;
-}
-
 
 .glass-panel {
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 80vh;
+    /* 限制最大高度為視埠高度的 80% */
     background: var(--panel-bg);
     border: 1px solid var(--line);
     border-radius: 26px;
@@ -85,18 +73,6 @@
     border-bottom: 1px solid var(--line);
 }
 
-.search-wrap {
-    position: relative;
-    min-width: min(100%, 270px);
-}
-
-.search-wrap i {
-    position: absolute;
-    top: 50%;
-    left: 14px;
-    color: #7e899d;
-    transform: translateY(-50%);
-}
 
 
 .soft-input {
@@ -136,6 +112,15 @@
     transform: translateY(-1px);
 }
 
+
+.start-trade {
+    background-color: green;
+}
+
+.stop-trade {
+
+    background-color: crimson;
+}
 
 .content {
     padding: 8px 28px 26px;

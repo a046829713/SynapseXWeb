@@ -20,7 +20,24 @@
     font-weight: 700;
 }
 
+.check-full-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: #67a3e8;
+    background: rgba(65, 86, 248, 0.1);
+    border: 1px solid rgba(89, 107, 240, 0.22);
+    border-radius: 999px;
+    font-size: .83rem;
+    font-weight: 700;
+}
 
+.check-full-info:hover{
+
+    background: rgba(140, 152, 244, 0.811);
+    color: rgba(2, 8, 51, 0.628);
+}
 .eyebrow {
     color: #a99aff;
     font-size: .72rem;

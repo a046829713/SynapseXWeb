@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, input, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
 import { timeFormat } from 'd3-time-format';
 import { EquityChartService } from './equity-chart.service';
 import { StrategyComponent } from '../../backtest/strategy/strategy.component';
 import { RouterLink } from '@angular/router';
+import { StrateyBigComponent } from '../../backtest/stratey-big/stratey-big.component';
 
 
 // 為了 TypeScript 的型別安全，定義一個資料點的介面
@@ -16,19 +17,18 @@ interface DataPoint {
 @Component({
 	selector: 'app-equity-chart',
 	standalone: true,
-	imports: [FormsModule, StrategyComponent, RouterLink], // 匯入 FormsModule
+	imports: [FormsModule, StrategyComponent, RouterLink, StrateyBigComponent], // 匯入 FormsModule
 	templateUrl: './equity-chart.component.html', // 我們將在下面修改這個檔案
 	styleUrls: ['./equity-chart.component.scss'],
 	providers: [EquityChartService]
 })
 export class EquityChartComponent implements OnInit, AfterViewInit {
-
 	constructor(private equityChartService: EquityChartService) {
 
 	}
 
-	showDate = '';
-	showValue = '';
+	showDate = signal('');
+	showValue = signal('');
 
 	// 使用 @Input 裝飾器，讓父元件可以傳入 data
 	@Input() data: DataPoint[] = [];
@@ -36,12 +36,16 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 	// 使用 @ViewChild 取得 HTML 模板中的 #chart 元素
 	@ViewChild('chart') private chartContainer!: ElementRef;
 
+
+	isFullScreenOpen = signal(false);
+
+
+
 	public jsonData: string = JSON.stringify(this.equityChartService.dummieData, null, 2);
 
 
 	ngOnInit(): void {
-		// 初始時不清空 data，而是使用 jsonData 的預設值來繪製圖表
-		console.log(123)
+
 	}
 
 	ngAfterViewInit(): void {
@@ -51,6 +55,13 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 			this.createChart();
 		}
 	}
+
+
+	FullScreenOpen(command: boolean) {
+		this.isFullScreenOpen.set(command);
+	}
+
+
 
 	private createChart(): void {
 		// 清除舊圖表，避免重複繪製
@@ -181,8 +192,8 @@ export class EquityChartComponent implements OnInit, AfterViewInit {
 					.style('left', `${event.pageX + 15}px`)
 					.style('top', `${event.pageY - 28}px`);
 
-				this.showDate = tooltipFormat(d.datetimelist);
-				this.showValue = d.CloseProfit.toFixed(2);
+				this.showDate.set(tooltipFormat(d.datetimelist));
+				this.showValue.set(d.CloseProfit.toFixed(2));
 			});
 	}
 }

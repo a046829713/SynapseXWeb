@@ -1,6 +1,6 @@
 <div class="strategy-page py-4 py-lg-5">
     <main class="container strategy-shell">
-        <section class="glass-panel" [class.compact]="compact()">
+        <section class="glass-panel">
             <header
                 class="panel-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div>
@@ -9,12 +9,17 @@
                     <p class="subtitle mb-0">Mamba2 模型 · 即時策略監控資訊</p>
                 </div>
 
-
-                <div class="status-pill">
-                    <span class="pulse"></span>
-                    系統運行中
+                <div class="d-flex flex-column">
+                    <div class="status-pill">
+                        系統運行中
+                    </div>
+                    <button class="check-full-info mt-3" (click)="OnShowDetail($event)">查看完整資訊</button>
                 </div>
+
+
+
             </header>
+
         </section>
     </main>
 </div>

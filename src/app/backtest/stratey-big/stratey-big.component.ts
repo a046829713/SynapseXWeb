@@ -1,9 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, signal } from '@angular/core';
+
+
+
+interface StrategyInfoItem {
+  label: string;
+  value: string;
+  icon: string;
+  group: '基本資料' | '運行狀態' | '績效指標';
+  type?: 'status' | 'profit' | 'loss';
+  sensitive?: boolean;
+}
+
 
 @Component({
   selector: 'app-stratey-big',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './stratey-big.component.html',
   styleUrl: './stratey-big.component.scss'
 })
@@ -12,6 +25,9 @@ export class StrateyBigComponent {
   readonly compact = signal(false);
   readonly showSensitive = signal(true);
   readonly copied = signal(false);
+  isTrade = signal(true);
+
+
 
 
   readonly groups: StrategyInfoItem['group'][] = ['基本資料', '運行狀態', '績效指標'];
@@ -59,17 +75,4 @@ export class StrateyBigComponent {
     return item.sensitive && !this.showSensitive() ? '••••••' : item.value;
   }
 
-
-  async copySummary(): Promise<void> {
-    const text = this.items.map(item => `${item.label}: ${item.value}`).join('');
-
-
-    try {
-      await navigator.clipboard.writeText(text);
-      this.copied.set(true);
-      window.setTimeout(() => this.copied.set(false), 1600);
-    } catch {
-      this.copied.set(false);
-    }
-  }
 }

@@ -1,96 +1,86 @@
-<div class="strategy-page min-vh-100 py-4 py-lg-5">
-    <main class="container strategy-shell">
-        <section class="glass-panel" [class.compact]="compact()">
-            <header
-                class="panel-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-                <div>
-                    <div class="eyebrow mb-2">TRADING STRATEGY</div>
-                    <h1 class="title mb-1">Meta-300k</h1>
-                    <p class="subtitle mb-0">Mamba2 模型 · 即時策略監控資訊</p>
-                </div>
-
-
-                <div class="status-pill">
-                    <span class="pulse"></span>
-                    系統運行中
-                </div>
-            </header>
-
-            <!-- <div class="toolbar d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
-                <div class="search-wrap">
-                    <i class="bi bi-search"></i>
-                    <input class="form-control soft-input" type="search" [ngModel]="query()"
-                        (ngModelChange)="query.set($event)" placeholder="搜尋資訊欄位..." aria-label="搜尋資訊欄位" />
-                </div>
-
-
-                <div class="d-flex flex-wrap gap-2">
-                    <button type="button" class="soft-btn" [class.active]="!showSensitive()"
-                        (click)="showSensitive.set(!showSensitive())" title="顯示或隱藏損益資訊">
-                        <i class="bi me-2" [ngClass]="showSensitive() ? 'bi-eye' : 'bi-eye-slash'"></i>
-                        損益
-                    </button>
-
-
-                    <button type="button" class="soft-btn" [class.active]="compact()" (click)="compact.set(!compact())"
-                        title="切換緊湊模式">
-                        <i class="bi bi-list-ul me-2"></i>
-                        緊湊
-                    </button>
-
-
-                    <button type="button" class="soft-btn" (click)="copySummary()" title="複製全部資訊">
-                        <i class="bi me-2" [ngClass]="copied() ? 'bi-check2' : 'bi-copy'"></i>
-                        {{ copied() ? '已複製' : '複製' }}
-                    </button>
-                </div>
+<div class="container">
+    <section class="glass-panel" [class.compact]="compact()">
+        <header class="panel-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <div class="eyebrow mb-2">TRADING STRATEGY</div>
+                <h1 class="title mb-1">Meta-300k</h1>
+                <p class="subtitle mb-0">Mamba2 模型 · 即時策略監控資訊</p>
             </div>
 
-            <div class="content">
-                @if (filteredItems().length === 0) {
-                <div class="empty-state">
-                    <i class="bi bi-search fs-2 d-block mb-3"></i>
-                    找不到符合「{{ query() }}」的資訊
-                </div>
-                } @else {
-                @for (group of groups; track group) {
-                @if (itemsByGroup(group).length > 0) {
-                <section>
-                    <div class="section-title">{{ group }}</div>
-                    <div class="row g-1">
-                        @for (item of itemsByGroup(group); track item.label) {
-                        <div class="col-12 col-lg-6">
-                            <div class="info-row">
-                                <span class="icon-box">
-                                    <i class="bi" [ngClass]="item.icon"></i>
-                                </span>
+
+            <div class="status-pill">
+                <span class="pulse"></span>
+                系統運行中
+            </div>
+        </header>
+
+        <div class="toolbar d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+            <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="soft-btn" [ngClass]="isTrade() ? 'stop-trade' : 'start-trade'"
+                    (click)="isTrade.set(!isTrade())" title="啟動或關閉程序運轉">  
+                    <i class="bi me-2" [ngClass]="isTrade() ? 'bi-sign-stop' : 'bi-play'"></i>                  
+                    {{ isTrade()? 'Stop Strategy':'Activate Strategy' }}
+                </button>
+
+                <button type="button" class="soft-btn" [class.active]="!showSensitive()"
+                    (click)="showSensitive.set(!showSensitive())" title="顯示或隱藏損益資訊">
+                    <i class="bi me-2" [ngClass]="showSensitive() ? 'bi-eye' : 'bi-eye-slash'"></i>
+                    損益
+                </button>
 
 
-                                <span class="info-label">{{ item.label }}</span>
+                <button type="button" class="soft-btn" [class.active]="compact()" (click)="compact.set(!compact())"
+                    title="切換緊湊模式">
+                    <i class="bi bi-list-ul me-2"></i>
+                    緊湊
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            @if (filteredItems().length === 0) {
+            <div class="empty-state">
+                <i class="bi bi-search fs-2 d-block mb-3"></i>
+                找不到符合「{{ query() }}」的資訊
+            </div>
+            } @else {
+            @for (group of groups; track group) {
+            @if (itemsByGroup(group).length > 0) {
+            <section>
+                <div class="section-title">{{ group }}</div>
+                <div class="row g-1">
+                    @for (item of itemsByGroup(group); track item.label) {
+                    <div class="col-12 col-lg-6">
+                        <div class="info-row">
+                            <span class="icon-box">
+                                <i class="bi" [ngClass]="item.icon"></i>
+                            </span>
 
 
-                                <span class="info-value" [class.positive]="item.type === 'profit'"
-                                    [class.negative]="item.type === 'loss'">
-                                    @if (item.type === 'status') {
-                                    <span class="mini-status">● {{ displayValue(item) }}</span>
-                                    } @else {
-                                    {{ displayValue(item) }}
-                                    }
-                                </span>
-                            </div>
+                            <span class="info-label">{{ item.label }}</span>
+
+
+                            <span class="info-value" [class.positive]="item.type === 'profit'"
+                                [class.negative]="item.type === 'loss'">
+                                @if (item.type === 'status') {
+                                <span class="mini-status">● {{ displayValue(item) }}</span>
+                                } @else {
+                                {{ displayValue(item) }}
+                                }
+                            </span>
                         </div>
-                        }
                     </div>
-                </section>
-                }
-                }
-                }
-            </div>
+                    }
+                </div>
+            </section>
+            }
+            }
+            }
+        </div>
 
-            <footer class="panel-footer d-flex flex-column flex-sm-row justify-content-between gap-1">
-                <span>資料僅供系統監控與策略分析</span>
-                <span>共 {{ items.length }} 項資訊 · 自動更新</span>
-            </footer> -->
-        </section>
-    </main>
+        <footer class="panel-footer d-flex flex-column flex-sm-row justify-content-between gap-1">
+            <span>資料僅供系統監控與策略分析</span>
+            <span>共 {{ items.length }} 項資訊 · 自動更新</span>
+        </footer>
+    </section>
 </div>
