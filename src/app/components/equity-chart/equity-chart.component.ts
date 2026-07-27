@@ -18,7 +18,7 @@ interface DataPoint {
 	standalone: true,
 	imports: [FormsModule, StrategyComponent, RouterLink], // 匯入 FormsModule
 	templateUrl: './equity-chart.component.html', // 我們將在下面修改這個檔案
-	styleUrls: ['./equity-chart.component.css'],
+	styleUrls: ['./equity-chart.component.scss'],
 	providers: [EquityChartService]
 })
 export class EquityChartComponent implements OnInit, AfterViewInit {

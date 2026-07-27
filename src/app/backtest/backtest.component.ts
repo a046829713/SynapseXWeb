@@ -8,7 +8,7 @@ import { tradingModelsIntroduces } from './backtest.service';
   standalone: true,
   imports: [CommonModule, ModelCardComponent],
   templateUrl: './backtest.component.html',
-  styleUrl: './backtest.component.css'
+  styleUrl: './backtest.component.scss'
 })
 export class BacktestComponent {
   Introduces = tradingModelsIntroduces;

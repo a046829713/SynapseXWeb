@@ -10,7 +10,7 @@ import { DataGridService } from './data-grid.service';
     standalone: true,
     imports: [TablesComponent, PaginationComponent],
     templateUrl: './data-grid.component.html',
-    styleUrl: './data-grid.component.css',
+    styleUrl: './data-grid.component.scss',
     providers: [DataGridService]
 })
 export class DataGridComponent<T> {

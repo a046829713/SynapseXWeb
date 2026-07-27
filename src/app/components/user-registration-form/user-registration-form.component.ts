@@ -30,7 +30,7 @@ export function passwordMatchValidator(control: AbstractControl): ValidationErro
     RouterLink
   ],
   templateUrl: './user-registration-form.component.html',
-  styleUrls: ['./user-registration-form.component.css']
+  styleUrls: ['./user-registration-form.component.scss']
 })
 export class UserRegistrationFormComponent {
   registrationForm = new FormGroup({

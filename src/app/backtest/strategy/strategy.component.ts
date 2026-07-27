@@ -20,7 +20,7 @@ interface StrategyInfoItem {
     standalone: true,
     imports: [CommonModule, FormsModule],
     templateUrl: './strategy.component.html',
-    styleUrl: './strategy.component.css'
+    styleUrl: './strategy.component.scss'
 })
 export class StrategyComponent {
     readonly query = signal('');

@@ -12,7 +12,7 @@ import { RouterLink, Router } from '@angular/router';
         RouterLink
     ],
     templateUrl: './user-login-form.component.html',
-    styleUrl: './user-login-form.component.css'
+    styleUrl: './user-login-form.component.scss'
 })
 export class UserLoginFormComponent {
     private router = inject(Router);

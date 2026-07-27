@@ -19,7 +19,7 @@ export interface TradingModel {
   standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './model-card.component.html',
-  styleUrl: './model-card.component.css'
+  styleUrl: './model-card.component.scss'
 })
 export class ModelCardComponent {
   @Input() model: TradingModel | undefined;

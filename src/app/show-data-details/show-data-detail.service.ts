@@ -22,7 +22,9 @@ export interface PageResult<T> {
 }
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class StockFakeDataService {
     stockData: StockData[] = [];
     errorMessage = '';

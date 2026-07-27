@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-stratey-big',
   standalone: true,
   imports: [],
   templateUrl: './stratey-big.component.html',
-  styleUrl: './stratey-big.component.css'
+  styleUrl: './stratey-big.component.scss'
 })
 export class StrateyBigComponent {
   readonly query = signal('');
